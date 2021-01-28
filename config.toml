@@ -1,4 +1,4 @@
-baseURL = "http://127.0.0.1"
+baseURL = "http://blog.bitchigo.icu/public"
 title = "bitchigo's blog"
 theme = "m10c"
 languageCode = "zh-cn"
