@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>安卓 on bitchigo&#39;s blog</title>
-    <link>https://blog.bitchigo.icu/tags/%E5%AE%89%E5%8D%93/</link>
+    <link>https://blog.bitchigo.icu/public/tags/%E5%AE%89%E5%8D%93/</link>
     <description>Recent content in 安卓 on bitchigo&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 31 Jan 2021 13:03:43 +0800</lastBuildDate><atom:link href="https://blog.bitchigo.icu/tags/%E5%AE%89%E5%8D%93/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 Jan 2021 13:03:43 +0800</lastBuildDate><atom:link href="https://blog.bitchigo.icu/public/tags/%E5%AE%89%E5%8D%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>记一次基于python&#43;adb的游戏脚本</title>
-      <link>https://blog.bitchigo.icu/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%9F%BA%E4%BA%8Epython&#43;adb%E7%9A%84%E6%B8%B8%E6%88%8F%E8%84%9A%E6%9C%AC/</link>
+      <link>https://blog.bitchigo.icu/public/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%9F%BA%E4%BA%8Epython&#43;adb%E7%9A%84%E6%B8%B8%E6%88%8F%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Sun, 31 Jan 2021 13:03:43 +0800</pubDate>
       
-      <guid>https://blog.bitchigo.icu/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%9F%BA%E4%BA%8Epython&#43;adb%E7%9A%84%E6%B8%B8%E6%88%8F%E8%84%9A%E6%9C%AC/</guid>
+      <guid>https://blog.bitchigo.icu/public/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%9F%BA%E4%BA%8Epython&#43;adb%E7%9A%84%E6%B8%B8%E6%88%8F%E8%84%9A%E6%9C%AC/</guid>
       <description>简述 由于日本游戏会检测root权限,甚者会检测虚拟机,于是便想到了由python编写脚本传递给adb执行,这样的话检测作弊也是比较困难的,
 代码 import aircv as ac #图像识别库 import subprocess import time import random import os tili=True #标记本轮是否体力用空 def getScreen(): subprocess.run(f&amp;#34;adb.exe shell screencap -p /sdcard/screen.png&amp;#34;, capture_output=True) #使手机截屏并存储到/sdcard/screen.png subprocess.run(f&amp;#34;adb.exe pull /sdcard/screen.png&amp;#34;, capture_output=True) #将图片拉取到电脑 def sendKey(width,height): subprocess.run(f&amp;#39;adb.exe shell input tap {width} {height}&amp;#39;, capture_output=True) #模拟点击屏幕 def find(btn): global tili imsrc = ac.imread(&amp;#39;screen.png&amp;#39;) #屏幕图像 imobj = ac.imread(&amp;#39;btn/&amp;#39;+btn+&amp;#39;.png&amp;#39;) #按钮图像 pos=ac.find_template(imsrc, imobj) #获取比对信息 if pos and pos.get(&amp;#39;confidence&amp;#39;) &amp;gt; 0.70: #相似度大于0.7时执行  if(btn==&amp;#34;end&amp;#34;): #如果体力为空 标记本轮结束 tili=False print(btn) #debug w = [pos[&amp;#39;rectangle&amp;#39;][0][0], pos[&amp;#39;rectangle&amp;#39;][2][0]] #获取按钮宽度范围 h = [pos[&amp;#39;rectangle&amp;#39;][0][1], pos[&amp;#39;rectangle&amp;#39;][1][1]] #获取按钮高度范围 pos = [random.</description>
     </item>
