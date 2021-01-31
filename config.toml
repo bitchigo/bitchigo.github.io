@@ -4,6 +4,7 @@ theme = "m10c"
 languageCode = "zh-cn"
 DefaultContentLanguage = "zh-cn"
 buildFuture = true
+googleAnalytics = "UA-175548698-1"
 [params]
     author = "bitchigo"
     keywords = "HTML, java, js, spring, web"
