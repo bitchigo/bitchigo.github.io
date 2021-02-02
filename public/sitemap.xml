@@ -1,28 +1,63 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-    <loc>https://blog.bitchigo.icu/public/tags/adb/</loc>
-    <lastmod>2021-01-31T13:03:43+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
     <loc>https://blog.bitchigo.icu/public/</loc>
-    <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <lastmod>2021-02-02T22:49:58+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/categories/</loc>
-    <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <lastmod>2021-02-02T22:49:58+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/posts/</loc>
+    <lastmod>2021-02-02T22:49:58+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>https://blog.bitchigo.icu/public/tags/</loc>
+    <lastmod>2021-02-02T22:49:58+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>https://blog.bitchigo.icu/public/tags/zookeeper/</loc>
+    <lastmod>2021-02-02T22:49:58+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>https://blog.bitchigo.icu/public/posts/zookeeper%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2021-02-02T22:49:58+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>https://blog.bitchigo.icu/public/tags/%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2021-02-02T22:49:58+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>https://blog.bitchigo.icu/public/categories/%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2021-02-02T22:49:58+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>https://blog.bitchigo.icu/public/tags/adb/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -37,13 +72,6 @@
 
 <url>
     <loc>https://blog.bitchigo.icu/public/categories/python/</loc>
-    <lastmod>2021-01-31T13:03:43+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://blog.bitchigo.icu/public/tags/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
