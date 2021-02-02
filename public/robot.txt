@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /public/
+Disallow: /assets/
+
+Sitemap: https://blog.bitchigo.icu/public/sitemap.xml
