@@ -31,3 +31,7 @@ googleAnalytics = "UA-175548698-1"
   weight = 40
   identifier = "categories"
   url = "/categories/"
+[sitemap]
+  changefreq = "monthly"
+  filename = "sitemap.xml"
+  priority = 0.5

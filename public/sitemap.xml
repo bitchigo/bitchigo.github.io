@@ -4,76 +4,106 @@ xmlns:xhtml="http://www.w3.org/1999/xhtml">
 <url>
     <loc>https://blog.bitchigo.icu/public/tags/adb/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/categories/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/posts/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/tags/python/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/categories/python/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/tags/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/categories/%E5%AE%89%E5%8D%93/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/tags/%E5%AE%89%E5%8D%93/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/tags/%E6%B8%B8%E6%88%8F/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/tags/%E8%84%9A%E6%9C%AC/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/posts/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%9F%BA%E4%BA%8Epython&#43;adb%E7%9A%84%E6%B8%B8%E6%88%8F%E8%84%9A%E6%9C%AC/</loc>
     <lastmod>2021-01-31T13:03:43+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/tags/%E6%9D%82%E8%B0%88/</loc>
     <lastmod>2021-01-28T23:05:34+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/categories/%E6%9D%82%E8%B0%88/</loc>
     <lastmod>2021-01-28T23:05:34+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 <url>
     <loc>https://blog.bitchigo.icu/public/posts/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</loc>
     <lastmod>2021-01-28T23:05:34+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
 </url>
 
 </urlset>
