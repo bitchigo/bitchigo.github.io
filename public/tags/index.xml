@@ -6,7 +6,25 @@
     <description>Recent content in Tags on bitchigo&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 31 Jan 2021 13:03:43 +0800</lastBuildDate><atom:link href="https://blog.bitchigo.icu/public/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Feb 2021 22:49:58 +0800</lastBuildDate><atom:link href="https://blog.bitchigo.icu/public/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>zookeeper</title>
+      <link>https://blog.bitchigo.icu/public/tags/zookeeper/</link>
+      <pubDate>Tue, 02 Feb 2021 22:49:58 +0800</pubDate>
+      
+      <guid>https://blog.bitchigo.icu/public/tags/zookeeper/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>笔记</title>
+      <link>https://blog.bitchigo.icu/public/tags/%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Tue, 02 Feb 2021 22:49:58 +0800</pubDate>
+      
+      <guid>https://blog.bitchigo.icu/public/tags/%E7%AC%94%E8%AE%B0/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>adb</title>
       <link>https://blog.bitchigo.icu/public/tags/adb/</link>

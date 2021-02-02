@@ -215,7 +215,7 @@ dataLength = 3
 numChildren = 1
 ```
 
-![image-20210202214901299](/pic/zookeeper笔记/image-20210202214901299.png)
+![image-20210202214901299](/public/img/zookeeper笔记/image-20210202214901299.png)
 
 ## 2.6 查看节点列表
 
