@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <title>Zookeeper笔记 // bitchigo&#39;s blog</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="bitchigo" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://blog.bitchigo.icu/public/css/main.min.68e582a4d4ed824d6b7e3b5b37cae47eb3779bd631046379d0e68b38230cc3e2.css" />
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175548698-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Zookeeper笔记"/>
+<meta name="twitter:description" content="0.目录 [TOC]
+1. 安装 1.1 创建zookeeper用户 [root@localhost ~]# adduser zookeeper [root@localhost ~]# passwd zookeeper Changing password for user zookeeper. New password: BAD PASSWORD: The password is shorter than 8 characters Retype new password: 切换到zookeeper用户登陆
+1.2 解压jdk，zookeeper [zookeeper@localhost ~]$ tar -zxvf apache-zookeeper-3.6.2-bin.tar.gz [zookeeper@localhost ~]$ tar -zxvf jdk-11.0.10_linux-x64_bin.tar.gz 1.3 配置环境 1.3.1 配置java环境 [zookeeper@localhost ~]$ nano .bash_profile 添加以下内容
+JAVA_HOME=/home/zookeeper/jdk-11.0.10 export JAVA_HOME PATH=$JAVA_HOME/bin:$PATH export PATH 执行以下语句使配置生效
+[zookeeper@localhost ~]$ . .bash_profile 1.3.2 配置zookeeper [zookeeper@localhost ~]$ cd apache-zookeeper-3."/>
+
+    <meta property="og:title" content="Zookeeper笔记" />
+<meta property="og:description" content="0.目录 [TOC]
+1. 安装 1.1 创建zookeeper用户 [root@localhost ~]# adduser zookeeper [root@localhost ~]# passwd zookeeper Changing password for user zookeeper. New password: BAD PASSWORD: The password is shorter than 8 characters Retype new password: 切换到zookeeper用户登陆
+1.2 解压jdk，zookeeper [zookeeper@localhost ~]$ tar -zxvf apache-zookeeper-3.6.2-bin.tar.gz [zookeeper@localhost ~]$ tar -zxvf jdk-11.0.10_linux-x64_bin.tar.gz 1.3 配置环境 1.3.1 配置java环境 [zookeeper@localhost ~]$ nano .bash_profile 添加以下内容
+JAVA_HOME=/home/zookeeper/jdk-11.0.10 export JAVA_HOME PATH=$JAVA_HOME/bin:$PATH export PATH 执行以下语句使配置生效
+[zookeeper@localhost ~]$ . .bash_profile 1.3.2 配置zookeeper [zookeeper@localhost ~]$ cd apache-zookeeper-3." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.bitchigo.icu/public/posts/zookeeper%E7%AC%94%E8%AE%B0/" />
+<meta property="article:published_time" content="2021-02-02T22:49:58+08:00" />
+<meta property="article:modified_time" content="2021-02-02T22:49:58+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://blog.bitchigo.icu/public"><img class="app-header-avatar" src="/public/avatar.jpg" alt="bitchigo" /></a>
+      <h1>bitchigo&#39;s blog</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/public/">主页</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/public/tags/">标签</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/public/categories/">类别</a>
+      </nav>
+      <p>一点一点的积累</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/bitchigo" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/bitchigo996" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Zookeeper笔记</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 2, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          4 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+              <a class="tag" href="https://blog.bitchigo.icu/public/tags/%E7%AC%94%E8%AE%B0/">笔记</a>
+              <a class="tag" href="https://blog.bitchigo.icu/public/tags/zookeeper/">zookeeper</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h1 id="0目录">0.目录</h1>
+<p>[TOC]</p>
+<h1 id="1-安装">1. 安装</h1>
+<h2 id="11-创建zookeeper用户">1.1 创建zookeeper用户</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>root@localhost ~<span style="color:#f92672">]</span><span style="color:#75715e"># adduser zookeeper</span>
+<span style="color:#f92672">[</span>root@localhost ~<span style="color:#f92672">]</span><span style="color:#75715e"># passwd zookeeper</span>
+Changing password <span style="color:#66d9ef">for</span> user zookeeper.
+New password: 
+BAD PASSWORD: The password is shorter than <span style="color:#ae81ff">8</span> characters
+Retype new password:
+</code></pre></div><p>切换到zookeeper用户登陆</p>
+<h2 id="12-解压jdkzookeeper">1.2 解压jdk，zookeeper</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zookeeper@localhost ~<span style="color:#f92672">]</span>$ tar -zxvf apache-zookeeper-3.6.2-bin.tar.gz
+<span style="color:#f92672">[</span>zookeeper@localhost ~<span style="color:#f92672">]</span>$ tar -zxvf jdk-11.0.10_linux-x64_bin.tar.gz
+</code></pre></div><h2 id="13-配置环境">1.3 配置环境</h2>
+<h3 id="131-配置java环境">1.3.1 配置java环境</h3>
+<pre><code class="language-shel" data-lang="shel">[zookeeper@localhost ~]$ nano .bash_profile
+</code></pre><p>添加以下内容</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">JAVA_HOME<span style="color:#f92672">=</span>/home/zookeeper/jdk-11.0.10
+export JAVA_HOME
+
+PATH<span style="color:#f92672">=</span>$JAVA_HOME/bin:$PATH
+export PATH
+</code></pre></div><p>执行以下语句使配置生效</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zookeeper@localhost ~<span style="color:#f92672">]</span>$ . .bash_profile
+</code></pre></div><h3 id="132-配置zookeeper">1.3.2 配置zookeeper</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zookeeper@localhost ~<span style="color:#f92672">]</span>$ cd apache-zookeeper-3.6.2-bin
+<span style="color:#f92672">[</span>zookeeper@localhost apache-zookeeper-3.6.2-bin<span style="color:#f92672">]</span>$ mkdir data
+<span style="color:#f92672">[</span>zookeeper@localhost apache-zookeeper-3.6.2-bin<span style="color:#f92672">]</span>$ cd conf
+<span style="color:#f92672">[</span>zookeeper@localhost conf<span style="color:#f92672">]</span>$ cp zoo_sample.cfg zoo.cfg
+<span style="color:#f92672">[</span>zookeeper@localhost conf<span style="color:#f92672">]</span>$ nano zoo.cfg
+</code></pre></div><p>修改dataDir</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">dataDir<span style="color:#f92672">=</span>/home/zookeeper/apache-zookeeper-3.6.2-bin/data
+</code></pre></div><h2 id="14-启动zookeeper">1.4 启动zookeeper</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zookeeper@localhost bin<span style="color:#f92672">]</span>$ cd /home/zookeeper/apache-zookeeper-3.6.2-bin/bin
+<span style="color:#f92672">[</span>zookeeper@localhost bin<span style="color:#f92672">]</span>$ ./zkServer.sh start
+</code></pre></div><blockquote>
+<p>zkServer其他指令</p>
+<p>./zkServer.sh stop</p>
+<p>./zkServer.sh status</p>
+</blockquote>
+<hr>
+<h1 id="2zookeeper简单使用">2.zookeeper简单使用</h1>
+<blockquote>
+<p>zkCli.sh 为客户端</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">./zkCil.sh -server 127.0.0.1  <span style="color:#75715e">#连接远程服务器</span>
+</code></pre></div><h2 id="21-创建节点">2.1 创建节点</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">create <span style="color:#f92672">[</span>-s<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-e<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-c<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-t ttl<span style="color:#f92672">]</span> path <span style="color:#f92672">[</span>data<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>acl<span style="color:#f92672">]</span>   <span style="color:#75715e"># 创建节点 s为有序节点 e为临时节点</span>
+</code></pre></div><blockquote>
+<ul>
+<li>
+<p>如果不添加 <code>-s</code>或-<code>e</code>的话为<code>持久化节点</code></p>
+</li>
+<li>
+<p><code>持久化</code> 表示<code>当前会话结束</code>还会<code>保留</code></p>
+</li>
+<li>
+<p><code>临时节点</code> <code>不能</code>拥有<code>子节点</code></p>
+</li>
+<li>
+<p>当没有data 时 值为<code>null</code></p>
+</li>
+<li>
+<p>必须<code>先创建上级节点</code>才能创建下级节点</p>
+</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 0<span style="color:#f92672">]</span> create /hadoop <span style="color:#e6db74">&#34;123456&#34;</span>
+Created /hadoop
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 2<span style="color:#f92672">]</span> create -s /a <span style="color:#e6db74">&#34;a&#34;</span>
+Created /a0000000001
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 3<span style="color:#f92672">]</span> create -e /b <span style="color:#e6db74">&#34;b&#34;</span>
+Created /b
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 4<span style="color:#f92672">]</span> create -se /c <span style="color:#e6db74">&#34;c&#34;</span>
+Created /c0000000003
+</code></pre></div><h2 id="22-获取节点">2.2 获取节点</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">get path -s -w <span style="color:#75715e"># s为输出子节点数据 打印当前节点状态 w为监听器</span>
+</code></pre></div><blockquote>
+<p>老版本无需-s参数即可输出</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 1<span style="color:#f92672">]</span> get /hadoop
+<span style="color:#ae81ff">123456</span>
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 9<span style="color:#f92672">]</span> get /a0000000001
+a
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 7<span style="color:#f92672">]</span> get /b
+b
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 10<span style="color:#f92672">]</span> get /c0000000003
+c
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 1<span style="color:#f92672">]</span> get -s /e
+null
+cZxid <span style="color:#f92672">=</span> 0x13
+ctime <span style="color:#f92672">=</span> Tue Feb <span style="color:#ae81ff">02</span> 21:28:22 CST <span style="color:#ae81ff">2021</span>
+mZxid <span style="color:#f92672">=</span> 0x13
+mtime <span style="color:#f92672">=</span> Tue Feb <span style="color:#ae81ff">02</span> 21:28:22 CST <span style="color:#ae81ff">2021</span>
+pZxid <span style="color:#f92672">=</span> 0x15
+cversion <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+dataVersion <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+aclVersion <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+ephemeralOwner <span style="color:#f92672">=</span> 0x0
+dataLength <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+numChildren <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</code></pre></div><h2 id="23-更新节点">2.3 更新节点</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">set path <span style="color:#f92672">[</span>-v dataVersion<span style="color:#f92672">]</span>
+</code></pre></div><blockquote>
+<p>老版本为 set path [dataVersion]</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 11<span style="color:#f92672">]</span> set /hadoop <span style="color:#e6db74">&#34;233&#34;</span>
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 24<span style="color:#f92672">]</span> set /b <span style="color:#e6db74">&#34;23345&#34;</span> -v <span style="color:#ae81ff">1</span>
+version No is not valid : /b
+</code></pre></div><blockquote>
+<p>修改数据后，<code>数据版本号</code>(dataVersion)会<code>+1 </code></p>
+<p>数据版本<code>不匹配</code>时 数据修改不会成功</p>
+</blockquote>
+<h2 id="24-删除节点">2.4 删除节点</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">delete path <span style="color:#f92672">[</span>-v dataVersion<span style="color:#f92672">]</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 47<span style="color:#f92672">]</span> delete /b
+</code></pre></div><blockquote>
+<p>老版本为 delete path [dataVersion]</p>
+<p>数据版本<code>不匹配</code>时 数据修改不会成功</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 46<span style="color:#f92672">]</span> delete /f
+Node not empty: /f
+</code></pre></div><p>删除当前路径以及该路径下的子节点</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">rmr path   ???????
+</code></pre></div><h2 id="25-查看节点和节点状态">2.5 查看节点和节点状态</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">stat path -w-
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 50<span style="color:#f92672">]</span> stat /f
+cZxid <span style="color:#f92672">=</span> 0x17
+ctime <span style="color:#f92672">=</span> Tue Feb <span style="color:#ae81ff">02</span> 21:31:17 CST <span style="color:#ae81ff">2021</span>
+mZxid <span style="color:#f92672">=</span> 0x17
+mtime <span style="color:#f92672">=</span> Tue Feb <span style="color:#ae81ff">02</span> 21:31:17 CST <span style="color:#ae81ff">2021</span>
+pZxid <span style="color:#f92672">=</span> 0x18
+cversion <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+dataVersion <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+aclVersion <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+ephemeralOwner <span style="color:#f92672">=</span> 0x0
+dataLength <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+numChildren <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p><img src="/public/img/zookeeper%E7%AC%94%E8%AE%B0/image-20210202214901299.png" alt="image-20210202214901299"></p>
+<h2 id="26-查看节点列表">2.6 查看节点列表</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ls path -s  <span style="color:#75715e"># s为输出子节点同时 打印当前节点状态</span>
+</code></pre></div><blockquote>
+<p>老版本<code>不存在-s</code>参数 用指令 <code>ls2 path</code> 代替</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 2<span style="color:#f92672">]</span> ls /e
+<span style="color:#f92672">[</span>a, e<span style="color:#f92672">]</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 0<span style="color:#f92672">]</span> ls -s /e
+<span style="color:#f92672">[</span>a, e<span style="color:#f92672">]</span>
+cZxid <span style="color:#f92672">=</span> 0x13
+ctime <span style="color:#f92672">=</span> Tue Feb <span style="color:#ae81ff">02</span> 21:28:22 CST <span style="color:#ae81ff">2021</span>
+mZxid <span style="color:#f92672">=</span> 0x13
+mtime <span style="color:#f92672">=</span> Tue Feb <span style="color:#ae81ff">02</span> 21:28:22 CST <span style="color:#ae81ff">2021</span>
+pZxid <span style="color:#f92672">=</span> 0x15
+cversion <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+dataVersion <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+aclVersion <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+ephemeralOwner <span style="color:#f92672">=</span> 0x0
+dataLength <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+numChildren <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</code></pre></div><h2 id="27-监听器">2.7 监听器</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">get path -w   添加一个监听器
+</code></pre></div><blockquote>
+<p>老版本为 get path watch</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 3<span style="color:#f92672">]</span> get /e -w
+null
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 4<span style="color:#f92672">]</span> set /e <span style="color:#e6db74">&#34;233&#34;</span>
+
+WATCHER::
+
+WatchedEvent state:SyncConnected type:NodeDataChanged path:/e
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 7<span style="color:#f92672">]</span> stat /d -w
+cZxid <span style="color:#f92672">=</span> 0x23
+ctime <span style="color:#f92672">=</span> Tue Feb <span style="color:#ae81ff">02</span> 21:53:25 CST <span style="color:#ae81ff">2021</span>
+mZxid <span style="color:#f92672">=</span> 0x23
+mtime <span style="color:#f92672">=</span> Tue Feb <span style="color:#ae81ff">02</span> 21:53:25 CST <span style="color:#ae81ff">2021</span>
+pZxid <span style="color:#f92672">=</span> 0x23
+cversion <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+dataVersion <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+aclVersion <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+ephemeralOwner <span style="color:#f92672">=</span> 0x0
+dataLength <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+numChildren <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 8<span style="color:#f92672">]</span> set /d <span style="color:#e6db74">&#34;123&#34;</span>
+
+WATCHER::
+
+WatchedEvent state:SyncConnected type:NodeDataChanged path:/d
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 11<span style="color:#f92672">]</span> ls /d -w
+<span style="color:#f92672">[</span>d<span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 13<span style="color:#f92672">]</span> create /d/e 
+
+WATCHER::
+
+WatchedEvent state:SyncConnected type:NodeChildrenChanged path:/d
+Created /d/e
+</code></pre></div><blockquote>
+<p>监听不到子节点的子节点的变化</p>
+</blockquote>
+<hr>
+<h2 id="3-acl权限控制">3 acl权限控制</h2>
+<pre><code>scheme:id:permisson
+</code></pre><ul>
+<li>
+<p>权限模式(scheme):授权的策略</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方案</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">world</td>
+<td>只有一个用户<code>anyone</code>,代表登陆zookeeper的所有用户</td>
+</tr>
+<tr>
+<td style="text-align:left">ip</td>
+<td>对客户端使用ip地址认证</td>
+</tr>
+<tr>
+<td style="text-align:left">auth</td>
+<td>使用已添加认证的用户认证</td>
+</tr>
+<tr>
+<td style="text-align:left">digest</td>
+<td>使用用户名 密码方式认证</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>授权对象(id):授权的对象</p>
+</li>
+<li>
+<p>权限(permisson):授权的权限</p>
+<table>
+<thead>
+<tr>
+<th>权限</th>
+<th>ACL简写</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>create</td>
+<td>c</td>
+<td>可以创建节点</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>d</td>
+<td>可以删除子节点(不包括子节点的子节点)</td>
+</tr>
+<tr>
+<td>read</td>
+<td>r</td>
+<td>可以读取节点数据和子节点列表</td>
+</tr>
+<tr>
+<td>write</td>
+<td>w</td>
+<td>可以设置节点数据</td>
+</tr>
+<tr>
+<td>admin</td>
+<td>a</td>
+<td>可以设置节点访问控制列表权限</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="31-相关命令">3.1 相关命令</h3>
+<h4 id="311-读取权限">3.1.1 读取权限</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">getAcl path
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 14<span style="color:#f92672">]</span> getAcl /d
+<span style="color:#e6db74">&#39;world,&#39;</span>anyone
+: cdrwa
+</code></pre></div><h4 id="312-设置权限">3.1.2 设置权限</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">setAcl path acl
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>zk: localhost:2181<span style="color:#f92672">(</span>CONNECTED<span style="color:#f92672">)</span> 15<span style="color:#f92672">]</span> setAcl /d ip:127.0.0.1:crwda
+</code></pre></div><h4 id="3121-world">3.1.2.1 world</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">setAcl path world:anyone:crwda
+</code></pre></div><h4 id="3122-ip">3.1.2.2 ip</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">setAcl path ip:192.168.1.1:crwda
+</code></pre></div><h4 id="3123-auth">3.1.2.3 auth</h4>
+<p>需要先添加授权用户</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">addauth digest username:password
+setAcl path auth:username:crwda
+</code></pre></div><h4 id="3124-digest">3.1.2.4 digest</h4>
+<p>密码需要先经过SHA1和BASE64处理</p>
+<p>可以通过以下语句获得</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">echo -n username:password |openssl dgest -binary -sha1 |openssl base64
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">setAcl path digest:usernmae:password:crwda
+</code></pre></div><blockquote>
+<p>需要多种权限 中间用,分割
+setAcl path world:anyone:crwda,auth:username:crwda,</p>
+</blockquote>
+<hr>
+<h1 id="4java">4.JAVA</h1>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
